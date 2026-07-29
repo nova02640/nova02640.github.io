@@ -1,0 +1,47 @@
+baseURL = "https://nova02640.github.io"
+title = "nova02640's Blog"
+theme = "paper"
+paginate = 10
+defaultContentLanguage = "zh-cn"
+enableRobotsTXT = true
+
+[params]
+  description = "个人博客"
+  dateFormat = "2006-01-02"
+  [params.homeInfoParams]
+    Title = "Hi, I'm nova02640 👋"
+    Content = "欢迎来到我的博客，这里记录我的思考和分享。"
+
+[[params.social]]
+  name = "github"
+  url = "https://github.com/nova02640"
+
+[[menu.main]]
+  identifier = "categories"
+  name = "分类"
+  url = "/categories/"
+  weight = 10
+
+[[menu.main]]
+  identifier = "tags"
+  name = "标签"
+  url = "/tags/"
+  weight = 20
+
+[[menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 30
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.highlight]
+      codeFences = true
+      guessSyntax = true
+      lineNos = false
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
