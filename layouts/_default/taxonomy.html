@@ -1,7 +1,10 @@
 {{- define "main" -}}
 
-<!-- Taxonomy Overview (tags / categories 总览页) -->
-{{- if not .Title -}}
+<!-- ============================================================
+     Taxonomy 总览页 (kind=taxonomy): /tags/ /categories/
+     ============================================================ -->
+{{- if eq .Kind "taxonomy" -}}
+
 <div class="-mt-2 mb-10">
   <h1 class="my-0! text-3xl font-semibold">
     {{- if eq .Type "tags" -}}🏷️ 标签归档{{- else -}}📁 分类归档{{- end -}}
@@ -16,6 +19,7 @@
 </div>
 
 <!-- Term Cloud -->
+{{- if .Data.Terms -}}
 <div class="mb-14 flex flex-wrap gap-3">
   {{- range .Data.Terms.Alphabetical -}}
   <a
@@ -27,6 +31,7 @@
   </a>
   {{- end -}}
 </div>
+{{- end -}}
 
 <!-- Recent posts -->
 {{- $recent := first 5 site.RegularPages -}}
@@ -41,9 +46,11 @@
 {{- end -}}
 {{- end -}}
 
+<!-- ============================================================
+     Term 页 (kind=term): /tags/hugo/ /categories/tech/
+     ============================================================ -->
 {{- else -}}
 
-<!-- Single Term Page (某个标签/分类下的文章列表) -->
 <h1 class="mb-14 text-3xl font-semibold">
   {{- if eq .Type "tags" -}}#{{- end -}}{{- .Title -}}
   <span class="ml-2 text-base font-normal opacity-50">{{ len .Pages }} 篇</span>
