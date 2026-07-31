@@ -1,7 +1,7 @@
 ---
 title: "把 Paper 主题改成程序员喜欢的样子：一次克制的主题定制"
 date: 2026-07-31
-description: "基于 Hugo Paper 主题做的一次克制定制：修复 taxonomy 空白、加入阅读时长、打磨代码块与滚动条细节。不 fork、不堆砌，用覆盖机制优雅扩展。"
+description: "基于 Hugo Paper 主题做的一次克制定制：加入阅读时长、打磨代码块与滚动条细节，并最终砍掉分类/标签页。不 fork、不堆砌，用覆盖机制优雅扩展。"
 tags: ["Hugo", "博客", "前端", "定制"]
 categories: ["技术"]
 ---
@@ -57,29 +57,29 @@ Hugo 的 `resources.Get` 优先查找**站点根目录**的 `assets/`，找不�
 
 ---
 
-## 动手：四件事
+## 动手：三件事 + 一次减法
 
-### 1. 修复 taxonomy 空白（新建 `layouts/_default/taxonomy.html`）
+### 1. 做减法：砍掉分类 / 标签页（`disableKinds`）
 
-Paper 的 `list.html` 对 taxonomy 总览页（`/tags/`、`/categories/`）无能为力，因为它只遍历 `.Paginate $pages`，而总览页没有 RegularPages。解决方案是新建 taxonomy 专属模板：
+最初我尝试**修复** taxonomy 空白——新建了 `layouts/_default/taxonomy.html`，用 `.Kind` 区分总览页与 term 页，让 `/tags/` 渲染出标签云和文章计数，效果也不错。
 
-```go
-<!-- 总览页：标签云 + 最新文章 -->
-<div class="mb-14 flex flex-wrap gap-3">
-  {{- range .Data.Terms.Alphabetical -}}
-  <a class="rounded-lg border ..." href="{{- .Page.RelPermalink -}}">
-    {{- .Page.Title -}} <span>{{- .Count -}}</span>
-  </a>
-  {{- end -}}
-</div>
+但用了一阵子，发现一个问题：**对于只有十几篇文章的个人博客，分类和标签的价值趋近于零**。导航栏多了两个入口，读者却很少点进去；反而增加了信息噪音。于是做了第二次决策——干脆砍掉：
+
+```toml
+# hugo.toml
+disableKinds = ["taxonomy", "term"]
 ```
 
-效果：
+这一行让 Hugo 彻底不再生成 `/tags/`、`/categories/` 页面。同时把文章底部的标签从链接改为纯文本展示（否则会变成 404 死链）：
 
-- `/tags/`：标签云 + 每个标签的文章数 + 最新 5 篇文章
-- `/tags/hugo/`：`#hugo` 标题 + 文章计数 + 文章摘要（`line-clamp-2` 截断两行）
+```go
+<!-- 文章底部：标签纯文本，不生成链接 -->
+{{- range .Params.tags -}}
+<span class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 ...">{{- . -}}</span>
+{{- end -}}
+```
 
-标签从"空白页"变成了"带计数的标签云"，这大概就是程序员的仪式感：**先有数据，再有视图**。
+导航栏最终只剩「关于」。**写代码的艺术是删代码**——对一个极简博客来说，少两个入口比多两个功能更符合它的气质。
 
 ### 2. 打磨细节（`assets/custom.css`）
 
@@ -131,8 +131,9 @@ Paper 的 `list.html` 对 taxonomy 总览页（`/tags/`、`/categories/`）无�
 
 推送到 GitHub 后，Actions 自动执行 `hugo --minify` 并部署。几个关键验证点：
 
-- [x] `/tags/`、`/categories/` 不再空白，显示标签云和计数
+- [x] `/tags/`、`/categories/` 已移除（HTTP 404），导航栏只剩「关于」
 - [x] 文章页显示"☕ N 分钟 · N 字"
+- [x] 文章底部标签为纯文本，无 404 死链
 - [x] 暗色模式下代码块、表格、滚动条均正常
 - [x] 移动端无横向溢出
 
