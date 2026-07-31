@@ -24,15 +24,13 @@
 
   <section>{{- .Content -}}</section>
 
-  <!-- Post Tags -->
+  <!-- Post Tags (纯文本展示，不生成链接) -->
   {{- if .Params.tags -}}
   <footer class="mt-12 flex flex-wrap">
-    {{- range .Params.tags -}} {{- $href := print (absURL "tags/") (urlize .)
-    -}}
-    <a
-      class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]"
-      href="{{- $href -}}"
-      >{{- . -}}</a
+    {{- range .Params.tags -}}
+    <span
+      class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 dark:bg-white/[8%] ltr:mr-1.5 rtl:ml-1.5"
+      >{{- . -}}</span
     >
     {{- end -}}
   </footer>

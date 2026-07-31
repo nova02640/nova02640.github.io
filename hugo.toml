@@ -6,6 +6,8 @@ defaultContentLanguage = "zh-cn"
 enableRobotsTXT = true
 author = "nova02640"
 copyright = "© 2026 nova02640"
+# 不生成分类/标签页面（保持极简）
+disableKinds = ["taxonomy", "term"]
 
 [params]
   description = "个人博客 · 记录思考与分享"
