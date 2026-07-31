@@ -4,13 +4,17 @@ theme = "paper"
 paginate = 10
 defaultContentLanguage = "zh-cn"
 enableRobotsTXT = true
+author = "nova02640"
+copyright = "© 2026 nova02640"
 
 [params]
-  description = "个人博客"
+  description = "个人博客 · 记录思考与分享"
   dateFormat = "2006-01-02"
-  [params.homeInfoParams]
-    Title = "Hi, I'm nova02640 👋"
-    Content = "欢迎来到我的博客，这里记录我的思考和分享。"
+  mainSections = ["posts"]
+  name = "nova02640"
+  bio = "程序员 · 记录思考与分享 · 用代码丈量世界"
+  # 强调色（Paper 支持 linen/wheat/gray/light）
+  color = "linen"
 
 [[params.social]]
   name = "github"
