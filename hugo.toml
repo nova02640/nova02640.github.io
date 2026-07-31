@@ -21,22 +21,10 @@ copyright = "© 2026 nova02640"
   url = "https://github.com/nova02640"
 
 [[menu.main]]
-  identifier = "categories"
-  name = "分类"
-  url = "/categories/"
-  weight = 10
-
-[[menu.main]]
-  identifier = "tags"
-  name = "标签"
-  url = "/tags/"
-  weight = 20
-
-[[menu.main]]
   identifier = "about"
   name = "关于"
   url = "/about/"
-  weight = 30
+  weight = 10
 
 [markup]
   [markup.goldmark]
