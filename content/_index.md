@@ -1,8 +1,8 @@
 ---
-title: "我的博客"
+title: "My Blog"
 date: 2026-07-27
 ---
 
-# 欢迎 👋
+# Welcome 👋
 
-这是我的个人博客，使用 Hugo 搭建，托管在 GitHub Pages 上。
+This is my personal blog, built with Hugo and hosted on GitHub Pages.

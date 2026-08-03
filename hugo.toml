@@ -19,19 +19,19 @@ ignoreErrors = ["error-disable-taxonomy"]
 
 [[menu.main]]
   identifier = "blog"
-  name = "博客"
+  name = "Blog"
   url = "/blog/"
   weight = 10
 
 [[menu.main]]
   identifier = "about"
-  name = "关于"
+  name = "About"
   url = "/about/"
   weight = 20
 
 [params]
   # The "description" of your website. This is used in the meta data of your generated html.
-  description = "个人博客 · 记录思考与分享"
+  description = "Personal blog · Thoughts and sharing"
   # The path to your "favicon". This should be a square (at least 32px x 32px) png-file.
   # Hint: It's good practise to also put a "favicon.ico"-file into your "static"-folder.
   # favicon = "images/favicon.png"

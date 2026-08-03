@@ -1,73 +1,73 @@
 ---
-title: "关于"
+title: "About"
 date: 2026-07-31
 ---
 
-# 关于本站
+# About This Site
 
-## 👋 关于我
+## 👋 About Me
 
-这里是 **nova02640** 的个人博客，记录我在编程、技术、生活中的思考与分享。
+This is the personal blog of **nova02640**, where I share my thoughts on programming, technology, and life.
 
-- 📮 联系邮箱：`nova_work@foxmail.com`
-- 🐙 GitHub：<https://github.com/nova02640>
+- 📮 Email: `nova_work@foxmail.com`
+- 🐙 GitHub: <https://github.com/nova02640>
 
 ---
 
-## 📢 内容使用与知识共享声明
+## 📢 Content Usage & Creative Commons Notice
 
-欢迎阅读本站。为使内容传播既自由有序、又符合法律规范，特此以审慎、清晰的方式向您说明本站内容的权利归属、使用授权及处理机制。
+Welcome to this site. To ensure that content sharing is both free and orderly while complying with legal standards, the following statement clarifies the ownership, licensing, and handling of the content on this site.
 
-### 一、权利归属
+### 1. Ownership
 
-**1.1** 除特别注明外，本博客中所有原创文章、代码示例、图表及其他内容的著作权，均归本博客作者所有。
+**1.1** Unless otherwise noted, the copyright of all original articles, code examples, graphics, and other content on this blog belongs to the author.
 
-**1.2** 文章中明确标注"转载"、"引用自"、"图片来源"等内容，其原始权利归属于相应权利人；本站对其仅作合理使用，权利归属以原始出处为准。
+**1.2** Content explicitly marked as "reproduced", "quoted from", or "image source" retains its original rights with the respective rights holders. This site uses such content under fair use principles, and ownership is determined by the original source.
 
-### 二、知识共享许可
+### 2. Creative Commons License
 
-**2.1** 本站原创内容采用 **知识共享 署名—非商业性使用—相同方式共享 4.0 国际（CC BY-NC-SA 4.0）** 许可协议授权：
+**2.1** Original content on this site is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)** license:
 
-> **你可以：**
-> - **共享** —— 在任何媒介以任何形式复制、发行本作品；
-> - **演绎** —— 修改、转换或以本作品为基础进行创作。
+> **You are free to:**
+> - **Share** — copy and redistribute the material in any medium or format;
+> - **Adapt** — remix, transform, and build upon the material.
 >
-> **惟需遵守以下条款：**
-> - **署名（BY）** —— 必须给出适当的署名，提供指向本许可协议的链接，同时标明是否对原始内容作了修改；
-> - **非商业性使用（NC）** —— 不得将本作品用于商业目的；
-> - **相同方式共享（SA）** —— 如果您基于本作品进行再创作，您必须以相同的许可协议发布您的演绎作品。
+> **Under the following terms:**
+> - **Attribution (BY)** — You must give appropriate credit, provide a link to the license, and indicate if changes were made;
+> - **NonCommercial (NC)** — You may not use the material for commercial purposes;
+> - **ShareAlike (SA)** — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
-**2.2** 完整许可文本见：<https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh>
+**2.2** Full license text: <https://creativecommons.org/licenses/by-nc-sa/4.0/>
 
-### 三、转载与引用指引
+### 3. Reproduction & Citation Guidelines
 
-**3.1** 在遵守上述许可协议的前提下，**欢迎转载与分享**本站原创文章，无需另行取得书面授权。建议转载时：
+**3.1** Subject to the above license terms, you are welcome to reproduce and share original articles from this site without obtaining separate written permission. When reproducing, it is recommended that you:
 
-1. 在文章显著位置标明原作者与原文链接；
-2. 完整保留文章内署名信息与许可声明；
-3. 若对内容进行修改、删减或补充，请如实说明，避免产生误导。
+1. Clearly indicate the original author and source link in a prominent location;
+2. Preserve attribution information and license notices within the article;
+3. If the content is modified, abridged, or supplemented, please state this clearly to avoid misleading readers.
 
-**3.2** 单纯**引用**（如引用片段、数据并注明出处）属于著作权法意义上的合理使用，不构成侵权。
+**3.2** Simple **citation** (e.g., quoting excerpts with proper attribution) constitutes fair use under copyright law and does not constitute infringement.
 
-**3.3** 商业用途（包括但不限于商业网站转载、出版物收录、付费课程素材等）请**务必事先联系作者**取得书面授权。
+**3.3** For commercial use (including but not limited to reproduction on commercial websites, inclusion in publications, or use in paid course materials), please **contact the author in advance** to obtain written permission.
 
-### 四、外部内容与侵权处理
+### 4. External Content & Infringement Handling
 
-**4.1** 本站部分内容可能引用、链接或转述来自公开网络的信息，其版权归原作者所有。本站引用时尽力标明出处，如因客观原因未能标注或有疏漏，敬请谅解。
+**4.1** Some content on this site may reference, link to, or paraphrase information from publicly available sources on the internet. The copyright for such content belongs to the original authors. This site endeavors to properly attribute sources. If any attribution is missing due to objective circumstances, your understanding is appreciated.
 
-**4.2** 若您认为本站内容侵犯了您的合法权益（包括但不限于著作权、肖像权、名誉权、隐私权等），请通过以下方式联系本站：
+**4.2** If you believe that content on this site infringes upon your legitimate rights (including but not limited to copyright, portrait rights, reputation rights, or privacy rights), please contact us via:
 
-- **联系邮箱**：`nova_work@foxmail.com`
-- 邮件请注明：**涉嫌侵权内容的具体链接（URL）**、**您的权利证明**（如著作权登记、原始发布记录等）、**具体侵权理由**及**您的联系方式**。
+- **Email**: `nova_work@foxmail.com`
+- Please include: **the specific URL of the allegedly infringing content**, **proof of your rights** (e.g., copyright registration, original publication records), **the specific infringement reasoning**, and **your contact information**.
 
-**4.3** 本站承诺：收到符合上述要件的有效通知后，将在**合理期限（通常不超过 7 个工作日）**内进行核查，并视情况对相关内容作删除、断开链接或修改处理，同时将处理结果回复您。
+**4.3** This site commits to: upon receiving a valid notice meeting the above requirements, conducting a review within a **reasonable period (typically no more than 7 business days)**, and taking appropriate action (removal, link disabling, or modification), and will reply with the outcome.
 
-### 五、免责声明
+### 5. Disclaimer
 
-**5.1** 本站内容仅供参考与学习交流之用，不构成任何专业意见（包括但不限于法律意见、投资建议、医疗建议）。因使用本站内容产生的任何后果，本站不承担相应责任。
+**5.1** Content on this site is for reference and educational purposes only and does not constitute professional advice (including but not limited to legal advice, investment advice, or medical advice). This site bears no responsibility for any consequences arising from the use of this site's content.
 
-**5.2** 本站可能包含第三方网站链接，对第三方网站的内容、准确性、合法性，本站不承担任何责任。
+**5.2** This site may contain links to third-party websites. This site bears no responsibility for the content, accuracy, or legality of third-party websites.
 
 ---
 
-*本声明自发布之日起生效，如有修订将更新于此页面。*
+*This notice takes effect from the date of publication and will be updated on this page if revised.*
