@@ -1,70 +1,223 @@
-# Migration Record: Paper → Hugo Bear Blog
+# Hugo Blog Theme Migration: From Paper to Hugo Bear Blog
 
-> A technical walkthrough of switching this Hugo blog's theme from [Paper](https://github.com/nanxiaobei/hugo-paper) to [Hugo Bear Blog](https://github.com/janraasch/hugo-bearblog).
+> Migration specification document for team developers. Covers end-to-end steps from preparation through verification, including all configuration changes, pitfalls, and rollback procedures.
 
-## 1. Background
+---
 
-This repository is a personal blog built with **Hugo** and deployed to **GitHub Pages** via **GitHub Actions**.
+## 1. Overview
 
-Before the migration, the blog used the **Paper** theme — a modern, Tailwind v4-driven theme with a clean but "decorated" visual style (rounded corners, shadows, transitions, etc.). Over time, a set of incremental customizations had been layered on top of Paper through Hugo's override mechanism.
+### 1.1 Background
 
-## 2. Why Migrate
+This repository is a personal blog built with the **Hugo** static site generator. It is deployed automatically to **GitHub Pages** via a **GitHub Actions** workflow on every push to `main`.
 
-The migration was motivated by a philosophy shift, not a feature gap.
+Prior to this migration, the blog ran on the **Paper** theme (`nanxiaobei/hugo-paper`), a modern Tailwind v4-driven theme. Incremental customizations (custom CSS, layout overrides, archetypes) had accumulated on top of Paper over time.
 
-| Driver | Explanation |
-|:-------|:------------|
-| Tailwind dependency | Paper is built on Tailwind v4. The compiled CSS works, but the theme's design language (utility classes, design tokens) adds conceptual complexity that a "just writing" blog doesn't need. |
-| JavaScript dependency | Paper relies on small amounts of JS for interactions (back-to-top, nav). For a static blog, **zero JS** is a deliberate choice. |
-| Visual style | Paper is modern but not "bare". Bear Blog's aesthetic targets **the browser's default look** with only minimal adjustments. |
-| Customization debt | Most of the existing custom CSS existed to *compensate* for Paper's defaults. A theme that is born right eliminates the need to patch it. |
+### 1.2 Migration Objective
 
-> Summary: if restraint is the highest form of design, Paper was not restrained enough.
+Replace the Paper theme with **Hugo Bear Blog** (`janraasch/hugo-bearblog`), a pure HTML/CSS, zero-JavaScript theme with a deliberately minimal, browser-native aesthetic.
 
-## 3. Migration Goals
+### 1.3 Scope of Changes
 
-- Switch the Hugo theme from Paper to Hugo Bear Blog.
-- Adopt Bear Blog's default configuration and URL scheme (`/:slug/`).
-- Keep all existing article content unchanged.
-- Remove all Paper-era customizations (custom CSS, layout overrides, archetypes).
-- Preserve the existing GitHub Actions deployment pipeline.
+- Theme submodule swap (Paper → Hugo Bear Blog).
+- Rewrite of `hugo.toml` to match Bear Blog configuration conventions.
+- Content directory reorganization (`content/*.md` → `content/blog/*.md`).
+- Removal of all Paper-era customization files.
+- English localization of non-article UI strings.
+- Addition of a bilingual (EN + ZH) README.
+- Addition of this migration specification document.
 
-## 4. Before vs. After
+**Out of scope:** article body content inside `content/blog/` remains verbatim; no CI/CD pipeline changes (the existing `hugo.yaml` workflow is reused as-is); no Hugo version upgrade.
 
-| Aspect | Before (Paper) | After (Hugo Bear Blog) |
-|:-------|:---------------|:-----------------------|
-| Theme submodule | `themes/paper` (nanxiaobei/hugo-paper) | `themes/hugo-bearblog` (janraasch/hugo-bearblog) |
-| CSS | Tailwind v4 (compiled) + 200+ lines of `custom.css` | ~200 lines of inline native CSS from the theme |
-| JavaScript | Small amount (back-to-top button, nav) | **Zero** |
-| Permalink | `/:sections/:year/:slug/` | `/:slug/` |
-| Navigation | Only "About" | Blog + About |
-| Date format | Custom | ISO 8601 (`2006-01-02`) |
-| Code highlighting | Paper built-in | `friendly` style with line numbers |
-| Taxonomy pages | Disabled (`disableKinds = ["taxonomy"]`) | Same (decision preserved) |
-| Custom files | `assets/custom.css`, `layouts/_default/single.html`, `layouts/partials/footer.html`, `archetypes/default.md` | None — all removed |
-| Content layout | `content/*.md` (posts at root) | `content/blog/*.md` |
+### 1.4 Deliverables
 
-## 5. Migration Steps
+1. Blog rendered under Hugo Bear Blog on GitHub Pages at `https://nova02640.github.io`.
+2. Clean `main` branch history with all changes committed.
+3. This `MIGRATION.md` document.
+4. Bilingual `README.md` (EN) + `README.zh.md` (ZH).
 
-The migration was performed on a dedicated branch `feat/switch-to-bearblog` and merged into `main` after local verification.
+---
 
-### Step 1 — Replace the theme submodule
+## 2. Pre-Migration State
+
+### 2.1 Tech Stack
+
+| Layer | Component | Version |
+|:------|:----------|:--------|
+| Static site generator | Hugo (extended) | 0.164.0 |
+| Theme | Paper (`nanxiaobei/hugo-paper`) | via git submodule |
+| Deployment target | GitHub Pages | — |
+| CI/CD | GitHub Actions workflow `.github/workflows/hugo.yaml` | `peaceiris/actions-hugo@v3` |
+| Trigger | Push to `main` branch | — |
+
+### 2.2 Content Layout
+
+```
+content/
+├── _index.md                     # home page
+├── about.md                      # /about/
+├── first-post.md                 # article 1
+├── llm-price-research.md         # article 2
+└── theme-optimization.md         # article 3
+```
+
+Articles sat directly under `content/`. Paper's default permalink pattern produced multi-level URLs such as `/posts/2026/first-post/`.
+
+### 2.3 Existing Customizations on Paper
+
+The following files overrode Paper's defaults through Hugo's lookup order:
+
+| Path | Purpose | Size |
+|:-----|:--------|:-----|
+| `assets/custom.css` | Tailwind-referencing overrides: fonts, scrollbars, code-blocks, quotes, links, back-to-top button styling | ~208 lines |
+| `layouts/_default/single.html` | Replaced Paper's single template to add reading time ("☕ N 分钟 · N 字") and custom tag rendering | ~133 lines |
+| `layouts/partials/footer.html` | Replaced Paper's footer; injected copyright + back-to-top button with inline JavaScript | ~38 lines |
+| `archetypes/default.md` | Custom front-matter archetype (YAML) | ~8 lines |
+
+### 2.4 Key Configuration Before Migration
+
+Relevant lines from the pre-migration `hugo.toml`:
+
+```toml
+theme = "paper"
+defaultContentLanguage = "zh-cn"
+params.color = "linen"
+disableKinds = ["taxonomy", "term"]          # taxonomy pages removed
+params.mainSections = ["posts", ""]
+# social links under [[params.social]]
+# menu: About only
+```
+
+---
+
+## 3. Migration Plan
+
+### 3.1 Branching Workflow
+
+All work was performed on a feature branch and merged via fast-forward.
+
+```
+main
+  └── feat/switch-to-bearblog      # all migration commits
+        └── (squashed or merged via fast-forward into main)
+```
+
+### 3.2 Change-Control Checklist
+
+- Every file change is justified in §4 through §9.
+- Local `hugo` build must pass with zero errors before any push.
+- `hugo server` preview must be manually checked against the acceptance checklist in §10.
+- Push is performed only after local verification passes.
+
+### 3.3 Risk & Rollback
+
+| Risk | Severity | Mitigation |
+|:-----|:--------|:-----------|
+| Submodule swap leaves stale state | Medium | Clean `.git/modules/` explicitly (see §4.3). |
+| Permalink change breaks inbound links | Low (no external SEO yet) | Acceptable; aliases available if later needed. |
+| Theme config mismatch causes blank pages | Medium | Build locally before push. |
+| CI fails after merge | Low | Reuse existing workflow with `submodules: recursive`. |
+| Human error during file edits | Low | Work on a disposable branch; reset if needed. |
+
+Rollback plan is fully described in §12.
+
+---
+
+## 4. Step 1 — Theme Submodule Replacement
+
+### 4.1 Remove Paper Submodule
+
+Three actions are required for a clean removal. `git submodule deinit` alone is **not** sufficient.
 
 ```bash
-# Remove the old Paper submodule
+# 1) Unregister and remove the working tree entry
 git submodule deinit -f themes/paper
-git rm -f themes/paper
-rm -rf .git/modules/themes/paper      # critical — see pitfall #1
 
-# Add the new Hugo Bear Blog submodule
+# 2) Remove the submodule's git data (CRITICAL — see §4.3)
+rm -rf .git/modules/themes/paper
+
+# 3) Remove the tracking entry from .gitmodules + index
+git rm -f themes/paper
+```
+
+### 4.2 Add Hugo Bear Blog Submodule
+
+```bash
 git submodule add https://github.com/janraasch/hugo-bearblog.git themes/hugo-bearblog
 ```
 
-Update `.gitmodules` accordingly. The GitHub Actions workflow already uses `submodules: recursive`, so no CI change is required.
+This updates `.gitmodules` to:
 
-### Step 2 — Rewrite `hugo.toml`
+```ini
+[submodule "themes/hugo-bearblog"]
+    path = themes/hugo-bearblog
+    url = https://github.com/janraasch/hugo-bearblog.git
+```
+
+### 4.3 Common Pitfall: Stale `.git/modules/` Directory
+
+**Symptom.** After `git submodule deinit`, running `git submodule add` for a new theme at the same or related path fails with "already exists" or pulls stale objects.
+
+**Root cause.** `git submodule deinit` only updates `config` and the working tree. It intentionally does **not** delete `$GIT_DIR/modules/<name>/`, preserving submodule reflog history. When the same path is reused later, the stale metadata collides.
+
+**Fix (already applied in §4.1 step 2).** Explicit `rm -rf .git/modules/themes/paper`.
+
+**Verification after step:**
+
+```bash
+git submodule status
+# Expected: one line —  87142ec... themes/hugo-bearblog ...
+```
+
+---
+
+## 5. Step 2 — Content Structure Migration
+
+### 5.1 Directory Restructure
+
+Bear Blog expects articles under `content/blog/` by default. Move all posts there:
+
+```bash
+mkdir -p content/blog
+git mv content/first-post.md               content/blog/
+git mv content/llm-price-research.md       content/blog/
+git mv content/theme-optimization.md       content/blog/
+# later additions:
+# content/blog/migration-to-bear-blog.md   (blog post about the migration)
+```
+
+Final layout:
+
+```
+content/
+├── _index.md
+├── about.md
+└── blog/
+    ├── first-post.md
+    ├── llm-price-research.md
+    ├── theme-optimization.md
+    └── migration-to-bear-blog.md
+```
+
+### 5.2 URL / Permalink Impact
+
+| Item | Paper (Before) | Bear Blog (After) |
+|:-----|:--------------|:------------------|
+| Permalink config | Paper default: per-section multi-level | `blog = "/:slug/"` (flat) |
+| Example article URL | `/posts/2026/first-post/` | `/hello-world-我的第一篇博客/` |
+| Blog listing page | Not a dedicated page | `/blog/` |
+| Tags index | Disabled | `/blog/:slug` |
+
+Because existing article titles are in Chinese, Hugo's auto-derived `slug` contains Chinese characters (URL-encoded by browsers). This was accepted without change for existing posts; new posts are expected to set `slug` explicitly in front matter.
+
+---
+
+## 6. Step 3 — Configuration Rewrite (`hugo.toml`)
+
+### 6.1 Full New Configuration
 
 ```toml
+# Base URL used when generating links to your pages
+baseURL = "https://nova02640.github.io"
 theme = "hugo-bearblog"
 title = "nova02640's Blog"
 author = "nova02640"
@@ -106,164 +259,296 @@ ignoreErrors = ["error-disable-taxonomy"]
     codeFences = true
   [markup.goldmark.renderer]
     unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 ```
 
-### Step 3 — Migrate content layout
+### 6.2 Line-by-Line Diff Against Pre-Migration Config
 
-```text
-content/
-├── _index.md          # home page
-├── about.md          # about page
-└── blog/             # ← moved from content/ root
-    ├── first-post.md
-    ├── llm-price-research.md
-    ├── theme-optimization.md
-    └── migration-to-bear-blog.md
-```
+| Category | Pre-migration | Post-migration | Rationale |
+|:---------|:--------------|:---------------|:----------|
+| Theme | `theme = "paper"` | `theme = "hugo-bearblog"` | Theme swap. |
+| Locale | `defaultContentLanguage = "zh-cn"` | `languageCode = "zh-cn"` | Bear Blog convention; still generates correct `<html lang>`. |
+| Color / bio / social | `params.color = "linen"`, `params.bio`, `[[params.social]]` | **Removed** | Bear Blog has no such params; UI is intentionally minimal. |
+| Main sections | `params.mainSections = ["posts", ""]` | **Removed** | Bear Blog uses `content/blog/` convention. |
+| Menu | `About` only | `Blog` (weight 10) + `About` (weight 20) | Restored Blog nav entry; UI localized to English. |
+| Disable kinds | `disableKinds = ["taxonomy", "term"]` | `disableKinds = ["taxonomy"]` + `ignoreErrors` | Bear Blog docs prescribe this exact pattern. |
+| Permalinks | Not set | `blog = "/:slug/"` + `tags = "/blog/:slug"` | Bear Blog's flat URL convention. |
+| `[params]` block | Paper-specific keys | `description`, `title`, `enablePostNavigator = true`, `dateFormat = "2006-01-02"` | Bear Blog param names; ISO 8601 dates; prev/next post navigation enabled. |
+| `[markup.highlight]` | Paper defaults | `style = 'friendly'`; `lineNos = true`; `codeFences = true`; `lineNumbersInTable = false` | Explicit, reproducible code highlighting per Bear Blog docs. |
+| `[markup.goldmark.renderer]` | — | `unsafe = true` | Allows inline HTML inside Markdown articles. |
+| `[outputs]` home | Default | `["HTML", "RSS", "JSON"]` | Explicit output formats. |
 
-Combined with `permalinks.blog = "/:slug/"`, article URLs become short and flat (e.g. `/hello-world-.../`) instead of the previous multi-level structure.
+### 6.3 Hugo Deprecation Notice
 
-### Step 4 — Remove Paper-era customizations
+`languageCode = "zh-cn"` triggers a deprecation warning in Hugo ≥ 0.158.0. This is a warning only — the build succeeds. A future follow-up change may migrate to the new `[languages.zh-cn]` table or use `defaultContentLanguage`.
 
-```text
-deleted:
-  layouts/_default/single.html   # reading-time override
-  layouts/partials/footer.html   # back-to-top button + JS
-  assets/custom.css              # ~200 lines of Tailwind-based overrides
-  archetypes/default.md          # custom archetype
-```
+---
 
-These were either unnecessary under Bear Blog (the theme already handles them) or incompatible with the new minimal aesthetic.
+## 7. Step 4 — Cleanup of Paper-Era Customizations
 
-### Step 5 — Local verification
+Each file listed below was deleted. The "Why removed" column explains why retaining it would be incorrect under Bear Blog.
+
+| File | Reason for Removal |
+|:-----|:-------------------|
+| `assets/custom.css` | References Paper's `./app.css` via Tailwind `@reference`; relies on Tailwind utility classes; Bear Blog uses pure CSS variables through `custom_head.html`. Retaining it would be dead code or cause build errors. |
+| `layouts/_default/single.html` | Paper-era override to add reading time, tag handling, and comment integrations (Disqus / GraphComment / giscus). Bear Blog's native single.html already renders date + content + tags + post-navigator. Keeping the override would silently skip Bear Blog's built-in behavior. |
+| `layouts/partials/footer.html` | Paper-era override injecting a back-to-top button + JS. Bear Blog has a defined footer signature; overriding it removes the "Made with Hugo ʕ•ᴥ•ʔ Bear" attribution. |
+| `archetypes/default.md` | Paper-specific front matter. Archetypes are now provided by the theme or derived from Bear Blog defaults. |
+
+Deletion commands:
 
 ```bash
-hugo server -D
+git rm assets/custom.css
+git rm layouts/_default/single.html
+git rm layouts/partials/footer.html
+git rm archetypes/default.md
+# Clean up any now-empty directories left under layouts/ / assets/ / archetypes/
 ```
 
-Checklist:
-- Home page renders with Bear Blog styling
-- `/blog/` lists all posts with dates
-- Article pages show title, date, content, tags, post navigator
-- `/about/` renders correctly
-- Dark mode auto-switches via `prefers-color-scheme`
-- Code blocks highlight with `friendly` style + line numbers
-- RSS feed generated
+---
 
-### Step 6 — Merge and deploy
+## 8. Step 5 — Localization of Non-Article UI
+
+Goal: non-article-facing UI strings (navigation, site description, headings in structural pages) use English; article content and the blog migration narrative post remain in Chinese.
+
+### 8.1 Menu Labels (already in §6.2)
+
+| Identifier | Old label | New label |
+|:-----------|:----------|:----------|
+| `blog`     | *(n/a — not present)* | `Blog` |
+| `about`    | `关于`    | `About` |
+
+### 8.2 `content/_index.md` (Home)
+
+Changed the welcome heading from Chinese to English. The goal is for visitors landing on `/` to see the English description first; navigation then leads to Chinese-language articles.
+
+### 8.3 `content/about.md`
+
+Changed the page heading and statement blocks to English. These are site-level declarations, not article prose.
+
+### 8.4 README Bilingual Scheme
+
+| File | Role |
+|:-----|:-----|
+| `README.md` | Default English version. Link at top: `[中文说明](./README.zh.md)`. |
+| `README.zh.md` | Full Chinese translation. Link at top: `[English](./README.md)`. |
+
+Both READMEs contain: project description, blog URL, and article index table linking to the live-post slugs. Article table rows use the same language as the README (EN titles in EN README, ZH titles in ZH README), while the target URLs remain identical.
+
+---
+
+## 9. Step 6 — Local Build and Verification
+
+### 9.1 Environment Prerequisites
+
+- Go-based `hugo` extended binary, version `0.164.0` (matches CI).
+- Submodules initialized: `git submodule update --init --recursive`.
+
+### 9.2 Production Build
 
 ```bash
+hugo --minify
+```
+
+Expected outcome:
+
+- Exit code `0`.
+- Summary line: `27 pages created` (actual count may drift as articles are added; any value > 0 is fine as long as zero errors).
+- No `ERROR` lines. A single `WARN` regarding deprecated `languageCode` is acceptable per §6.3.
+- `public/` directory generated with minified HTML/CSS/XML/JSON.
+
+### 9.3 Preview Server
+
+```bash
+hugo server -D -p 1313
+```
+
+Open `http://localhost:1313/`.
+
+### 9.4 Acceptance Checklist
+
+Every item below must be satisfied before push.
+
+| # | Area | Check | Status |
+|:-:|:-----|:------|:-------|
+| 1 | Home `/` | Bear Blog styling visible; title, bio, navigation rendered; no blank sections | ✅ |
+| 2 | Blog index `/blog/` | List of all 3+ posts; each entry shows date + link; tag cloud at bottom | ✅ |
+| 3 | About `/about/` | English About content present; CC + takedown sections rendered correctly | ✅ |
+| 4 | Article page | Title, ISO-format date, body, tags, post-navigator (← / →) all present | ✅ |
+| 5 | URL pattern | Articles reachable at `/:slug/`, not at old multi-level paths | ✅ |
+| 6 | Code blocks | `friendly` highlight style with line numbers and rounded corners | ✅ |
+| 7 | Dark mode | `prefers-color-scheme: dark` flips palette (verify via dev tools or OS setting) | ✅ |
+| 8 | Back-to-top | **Absent** — deliberately removed per Bear Blog philosophy | ✅ |
+| 9 | Reading-time badge | **Absent** — deliberately no custom single.html override | ✅ |
+| 10 | Footer | "Made with Hugo ʕ•ᴥ•ʔ Bear Blog" attribution line present | ✅ |
+| 11 | RSS | `/index.xml` returns valid XML; `/feed.json` returns valid JSON | ✅ |
+| 12 | robots.txt | Present and non-empty (thanks to `enableRobotsTXT`) | ✅ |
+| 13 | Console | 0 JS errors; 0 failed asset fetches; no CSP violations | ✅ |
+| 14 | Permalink diff | No old `/posts/2026/...`-style 404 links in README | ✅ |
+
+---
+
+## 10. Step 7 — CI/CD and Deployment
+
+### 10.1 Workflow File (Reused Unchanged)
+
+`.github/workflows/hugo.yaml` (3 steps — checkout, setup Hugo, build, deploy) was kept verbatim:
+
+- `actions/checkout@v4` with `submodules: recursive` and `fetch-depth: 0` — the recursive flag is **required** so the new Bear Blog submodule is pulled on the CI runner.
+- `peaceiris/actions-hugo@v3` pinning `hugo-version: "0.164.0"` + `extended: true`.
+- `hugo --minify` build step.
+- `actions/upload-pages-artifact@v3` upload of `./public`.
+- `actions/deploy-pages@v4` to the `github-pages` environment.
+
+### 10.2 Permissions (Reused Unchanged)
+
+```
+contents: read
+pages: write
+id-token: write
+```
+
+Sufficient for checkout + Pages deployment; no additional OIDC scopes required.
+
+### 10.3 Push Procedure
+
+```bash
+# After local build + §9 checks pass.
 git checkout main
-git merge feat/switch-to-bearblog
+git merge --ff-only feat/switch-to-bearblog    # no merge commit on clean fast-forward
 git push origin main
 ```
 
-The push triggers the existing GitHub Actions workflow (`.github/workflows/hugo.yaml`), which runs `hugo --minify` and deploys to GitHub Pages. No CI changes were needed.
+The push triggers the workflow. Actions runs are visible at `https://github.com/nova02640/nova02640.github.io/actions`.
 
-## 6. Pitfalls and Solutions
+### 10.4 Expected GitHub Actions Run Outcome
 
-### Pitfall 1 — Submodule cleanup residue
-
-`git submodule deinit` does **not** remove `.git/modules/<path>/`. Leftover directories cause the new submodule to fail initialization or pull stale state.
-
-**Fix**: manually `rm -rf .git/modules/themes/paper` after deinit.
-
-### Pitfall 2 — Permalink change breaks existing URLs
-
-Switching from `/:sections/:year/:slug/` to `/:slug/` changes every article's URL. For a personal blog without inbound links this was acceptable. For blogs with SEO/external links, consider either:
-
-- keeping the old permalink pattern, or
-- adding `aliases` in front matter for redirects, or
-- serving 301 redirects via GitHub Pages.
-
-### Pitfall 3 — Non-ASCII slugs
-
-Because existing article titles are in Chinese, Hugo auto-generates slugs containing Chinese characters (e.g. `/国产大模型官方价格一览2026-07/`). Browsers encode them correctly, but they are unfriendly for sharing and SEO.
-
-**Fix**: set an explicit English `slug` in front matter for new posts. Existing posts keep their original slugs to avoid breaking links.
-
-```markdown
----
-title: "..."
-slug: "migrating-from-paper-to-hugo-bear-blog"
----
+```
+✅ build    (ubuntu-latest) — Checkout → Setup Hugo → Build → Upload artifact
+✅ deploy   (ubuntu-latest) — Deploy to GitHub Pages
 ```
 
-### Pitfall 4 — Hugo deprecation warning
+Failure modes:
 
-`languageCode = "zh-cn"` triggers a deprecation warning in Hugo ≥ 0.158.0. Recommended replacement:
+| Symptom | Likely cause | Fix |
+|:--------|:-------------|:----|
+| Build step fails: theme not found | Submodule not pulled recursively | Confirm `submodules: recursive` in checkout step. |
+| Build step fails: Hugo version mismatch | CI runner has a different version | Pin exact version in workflow. |
+| Deploy step fails: permission / OIDC | Missing `id-token: write` or Pages misconfigured | Check repo Settings → Pages → Source = GitHub Actions. |
 
-```toml
-# Before
-languageCode = "zh-cn"
+---
 
-# After
-defaultContentLanguage = "zh-cn"
-# or, more precisely
-languageCode = "zh-cn"  # still works but warns
-# [languages.zh-cn] languageName = "简体中文" weight = 1 ...
+## 11. Post-Migration Verification (Three Tiers)
+
+### 11.1 Local Git vs. Remote
+
+```bash
+git fetch origin
+git rev-parse HEAD            # → edcfb51... (example)
+git rev-parse origin/main     # → edcfb51... — must match
+git log origin/main..main     # → empty (no local-only commits)
+git log main..origin/main     # → empty (no remote-only commits)
 ```
 
-This is a warning only — build and deploy still succeed.
+### 11.2 Remote Repository Contents
 
-## 7. Outcome
+On GitHub at `https://github.com/nova02640/nova02640.github.io/tree/main`, confirm:
 
-### Visual
+- `themes/hugo-bearblog/` is a green submodule link pointing at `janraasch/hugo-bearblog`.
+- No `themes/paper/` directory remains.
+- `hugo.toml`, `MIGRATION.md`, `README.md`, and `README.zh.md` all present.
+- `content/blog/` contains all article files.
 
-The blog moved from a modern, decorated look to a deliberately bare one: browser-default fonts, no rounded corners or shadows, no hover transitions, no JavaScript.
+### 11.3 Live GitHub Pages Site
 
-### Performance
+At `https://nova02640.github.io/`, re-run the acceptance checklist from §9.4 against the live deployment.
 
-- **Zero JS** is shipped to the reader.
-- CSS is inlined into `<head>` (~a few hundred lines), no extra network request.
-- No render-blocking resources.
+Additionally verify:
 
-### Maintainability
+- SSL certificate valid (HTTPS only, no mixed content).
+- Custom domain / `CNAME`, if any — not used by this site, so `N/A`.
+- Cache cleared or allow a few minutes for Pages CDN propagation.
 
-- `hugo.toml` is shorter and follows the theme's documented conventions.
-- No custom layout/CSS/archetype files to maintain.
-- Theme upgrades should be conflict-free since nothing is overridden.
+---
 
-## 8. Decisions Worth Highlighting
+## 12. Rollback Plan
 
-| Decision | Rationale |
-|:---------|:----------|
-| Keep `disableKinds = ["taxonomy"]` | The taxonomy-free decision was made during the Paper era and still aligns with the minimal philosophy. |
-| Drop all Paper-era customizations | The customizations existed to compensate for Paper's defaults. Bear Blog is closer to the desired end state, so they are no longer needed. |
-| Use Bear Blog's default `/:slug/` permalink | Embraces the theme's native convention. Acceptable since no external links depend on the old URLs. |
-| No dark-mode toggle | Bear Blog relies on `prefers-color-scheme` for automatic dark mode. No button, no JS, no user-facing config. |
-| Preserve existing article content unchanged | Migration touches presentation and structure, not content. |
+Two rollback strategies are available depending on the severity of the post-deployment problem.
 
-## 9. File Changes Summary
+### 12.1 Strategy A — Branch-Level (Fastest, Recommended First)
 
-| File | Change |
-|:-----|:-------|
-| `.gitmodules` | Submodule switched from `themes/paper` to `themes/hugo-bearblog` |
-| `hugo.toml` | Rewritten for Bear Blog conventions (theme, permalinks, menu, params, markup) |
-| `content/blog/*.md` | Moved from `content/` root into `content/blog/` |
-| `content/_index.md` | Welcome text updated to English |
-| `content/about.md` | Page title and copy updated to English |
-| `README.md` | Restructured to English default with a link to `README.zh.md` |
-| `README.zh.md` | New Chinese version with a link back to `README.md` |
-| `layouts/_default/single.html` | Deleted (Paper-era reading-time override) |
-| `layouts/partials/footer.html` | Deleted (Paper-era back-to-top button + JS) |
-| `assets/custom.css` | Deleted (Paper-era Tailwind overrides) |
-| `archetypes/default.md` | Deleted (custom archetype) |
-| `themes/hugo-bearblog` | New theme submodule added |
-| `themes/paper` | Old theme submodule removed |
+If the migration commit is the tip of `main` and everything before it ran on Paper:
 
-## 10. Lessons Learned
+```bash
+# Find the last pre-migration commit hash, e.g. <ABC>
+git log --oneline main
 
-1. **Customization is debt.** Each override you add to a theme is something you must re-validate on every upgrade or migration. The fewer overrides, the easier the next move.
-2. **Pick a theme whose defaults match your taste.** Patching a theme to fit your taste is more fragile than choosing a theme that already fits.
-3. **Submodule migration is a known trap.** Always clean `.git/modules/` after `deinit`.
-4. **Permalink changes are cheap until they aren't.** For small personal blogs they're fine; for anything with inbound traffic, plan redirects up front.
-5. **Zero JS is a feature, not a limitation.** It removes an entire class of rendering, accessibility, and security concerns.
+# Revert the migration commit(s) — creates a new inverse commit, keeps history
+git revert <migration-commit-sha>
+git push origin main
+```
 
-## 11. References
+If a revert produces conflicts (unlikely for a theme swap because files rarely change simultaneously outside the migration), use Strategy B instead.
 
-- Hugo Bear Blog theme: <https://github.com/janraasch/hugo-bearblog>
-- Original Bear Blog (inspiration): <https://bearblog.dev/>
-- Paper theme (previous): <https://github.com/nanxiaobei/hugo-paper>
-- Hugo documentation: <https://gohugo.io/documentation/>
-- Hugo submodule guide: <https://gohugo.io/hugo-modules/theme-components/>
+### 12.2 Strategy B — Reset (Destructive to History)
+
+```bash
+# Hard-reset main to the last known-good commit
+git checkout main
+git reset --hard <last-commit-before-migration>
+
+# Force-push — coordinate with team to avoid someone pulling stale main
+git push --force-with-lease origin main
+```
+
+### 12.3 Submodule Recovery
+
+If after rollback the Paper submodule is left in an inconsistent state:
+
+```bash
+git submodule sync --recursive
+git submodule update --init --recursive --force
+```
+
+### 12.4 CI Pipeline Rollback
+
+The workflow file was not modified, so there is nothing to roll back at the CI layer. After the code revert, the next push to `main` redeploys the previous Paper state.
+
+---
+
+## 13. Lessons Learned
+
+1. **Explicit > implicit for submodules.** Always include the `rm -rf .git/modules/…` step in any migration playbook; rely on team documentation rather than muscle memory.
+2. **Permalinks are a contract.** For a blog without SEO history it is fine to break URLs, but for production sites, capture aliases or 301 redirects *before* the migration.
+3. **Slug = stable identifier.** New posts should define `slug` explicitly (English, kebab-case) so the URL is stable regardless of later title edits.
+4. **Theme overrides are migration debt.** The Paper-era overrides required careful deletion; overrides that are not feature-gated per-theme silently break on a theme swap.
+5. **Verify end-to-end before push.** `hugo` success is not sufficient — preview-verify the three page types (home, listing, article) plus dark mode + RSS every time.
+6. **CI config should not require change for theme swaps.** Keeping the checkout step `submodules: recursive` and Hugo version pinned made this a zero-CI-change migration.
+7. **Bilingual docs: one canonical, one linked.** Putting two full READMEs in the root is noisy but explicit; avoid partial translations.
+
+---
+
+## 14. Appendix: Complete File Change Log
+
+| File | Change Type | Summary of Change |
+|:-----|:------------|:------------------|
+| `.gitmodules` | Modify | Replaced `themes/paper` submodule entry with `themes/hugo-bearblog`. |
+| `.github/workflows/hugo.yaml` | (None) | Reused verbatim; confirmed `submodules: recursive`. |
+| `hugo.toml` | Rewrite | Full rewrite for Bear Blog; see §6.2 for line-by-line diff. |
+| `README.md` | Rewrite | English default, blog URL, article index, link to `README.zh.md`. |
+| `README.zh.md` | New | Chinese mirror of README; link back to `README.md`. |
+| `MIGRATION.md` | New | This document — end-to-end migration specification. |
+| `content/_index.md` | Modify | English welcome heading + intro. |
+| `content/about.md` | Modify | English title and declaration blocks; article content untouched. |
+| `content/blog/first-post.md` | Move + New dir | Moved from `content/` into `content/blog/`; body unchanged. |
+| `content/blog/llm-price-research.md` | Move + New dir | Moved from `content/` into `content/blog/`; body unchanged. |
+| `content/blog/theme-optimization.md` | Move + New dir | Moved from `content/` into `content/blog/`; body unchanged. |
+| `content/blog/migration-to-bear-blog.md` | New | Chinese narrative blog post describing the migration for blog readers. |
+| `assets/custom.css` | Delete | Paper-era Tailwind-referencing overrides. |
+| `layouts/_default/single.html` | Delete | Paper-era reading-time + tag integration. |
+| `layouts/partials/footer.html` | Delete | Paper-era back-to-top button + JS. |
+| `archetypes/default.md` | Delete | Paper-specific YAML archetype. |
+| `themes/paper` | Delete submodule | Old theme. |
+| `themes/hugo-bearblog` | New submodule | New theme at pinned commit. |
