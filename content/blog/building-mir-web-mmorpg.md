@@ -2,6 +2,7 @@
 title: "从零搭建浏览器传奇类 MMORPG：Phaser 4 + Colyseus 全栈实践"
 date: 2026-08-11
 description: "记录一个 Web 端传奇类游戏项目的完整开发过程：技术调研、架构设计、核心模块实现、Docker 部署，以及踩过的那些坑。"
+slug: "building-mir-web-mmorpg"
 tags: ["Web 游戏", "Phaser", "Colyseus", "TypeScript", "Docker"]
 categories: ["技术"]
 ---
