@@ -12,11 +12,13 @@
 
 | # | 文章 | 日期 | 链接 |
 |:-:|:----|:----:|:----|
-| 1 | 幸福的诅咒 | 2026-08-04 | [阅读 →](https://nova02640.github.io/the-curse-of-happiness/) |
-| 2 | 从 Paper 到 Hugo Bear Blog：一次极简主义迁移 | 2026-08-03 | [阅读 →](https://nova02640.github.io/migrating-from-paper-to-hugo-bear-blog/) |
-| 3 | 把 Paper 主题改成程序员喜欢的样子：一次克制的主题定制 | 2026-07-31 | [阅读 →](https://nova02640.github.io/把-paper-主题改成程序员喜欢的样子一次克制的主题定制/) |
-| 4 | 国产大模型官方价格一览（2026-07） | 2026-07-30 | [阅读 →](https://nova02640.github.io/国产大模型官方价格一览2026-07/) |
-| 5 | Hello World! 我的第一篇博客 | 2026-07-27 | [阅读 →](https://nova02640.github.io/hello-world-我的第一篇博客/) |
+| 1 | 从零搭建浏览器传奇类 MMORPG：Phaser 4 + Colyseus 全栈实践 | 2026-08-11 | [阅读 →](https://nova02640.github.io/building-mir-web-mmorpg/) |
+| 2 | 面朝烟火，静对人海 | 2026-08-11 | [阅读 →](https://nova02640.github.io/facing-smoke-and-sea/) |
+| 3 | 幸福的诅咒 | 2026-08-04 | [阅读 →](https://nova02640.github.io/the-curse-of-happiness/) |
+| 4 | 从 Paper 到 Hugo Bear Blog：一次极简主义迁移 | 2026-08-03 | [阅读 →](https://nova02640.github.io/migrating-from-paper-to-hugo-bear-blog/) |
+| 5 | 把 Paper 主题改成程序员喜欢的样子：一次克制的主题定制 | 2026-07-31 | [阅读 →](https://nova02640.github.io/把-paper-主题改成程序员喜欢的样子一次克制的主题定制/) |
+| 6 | 国产大模型官方价格一览（2026-07） | 2026-07-30 | [阅读 →](https://nova02640.github.io/国产大模型官方价格一览2026-07/) |
+| 7 | Hello World! 我的第一篇博客 | 2026-07-27 | [阅读 →](https://nova02640.github.io/hello-world-我的第一篇博客/) |
 
 ---
 
