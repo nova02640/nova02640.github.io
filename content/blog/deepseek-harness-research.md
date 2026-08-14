@@ -7,8 +7,6 @@ tags: ["AI", "DeepSeek", "Agent", "开源", "调研"]
 categories: ["技术"]
 ---
 
-# DeepSeek Harness 深度调研：一切皆插件的 Agent 框架
-
 ## 引言
 
 2026 年 8 月 13 日，DeepSeek AI 开源了 **DeepSeek Harness**（`dsh`）——一个基于 TypeScript 的 Agent 运行框架，发布当天即斩获 **8.5 万 star**，社区热度现象级。
