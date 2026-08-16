@@ -12,15 +12,16 @@
 
 | # | 文章 | 日期 | 链接 |
 |:-:|:----|:----:|:----|
-| 1 | 从引入到删除：一次 opencode 实战测试的完整记录 | 2026-08-15 | [阅读 →](https://nova02640.github.io/opencode-testing-recap/) |
-| 2 | DeepSeek Harness 深度调研：一切皆插件的 Agent 框架 | 2026-08-13 | [阅读 →](https://nova02640.github.io/deepseek-harness-research/) |
-| 3 | 从零搭建浏览器传奇类 MMORPG：Phaser 4 + Colyseus 全栈实践 | 2026-08-11 | [阅读 →](https://nova02640.github.io/building-mir-web-mmorpg/) |
-| 4 | 面朝烟火，静对人海 | 2026-08-11 | [阅读 →](https://nova02640.github.io/facing-smoke-and-sea/) |
-| 5 | 幸福的诅咒 | 2026-08-04 | [阅读 →](https://nova02640.github.io/the-curse-of-happiness/) |
-| 6 | 从 Paper 到 Hugo Bear Blog：一次极简主义迁移 | 2026-08-03 | [阅读 →](https://nova02640.github.io/migrating-from-paper-to-hugo-bear-blog/) |
-| 7 | 把 Paper 主题改成程序员喜欢的样子：一次克制的主题定制 | 2026-07-31 | [阅读 →](https://nova02640.github.io/把-paper-主题改成程序员喜欢的样子一次克制的主题定制/) |
-| 8 | 国产大模型官方价格一览（2026-07） | 2026-07-30 | [阅读 →](https://nova02640.github.io/国产大模型官方价格一览2026-07/) |
-| 9 | Hello World! 我的第一篇博客 | 2026-07-27 | [阅读 →](https://nova02640.github.io/hello-world-我的第一篇博客/) |
+| 1 | 在 NAS 上部署 mihomo：从调研到全屋 GitHub 加速 | 2026-08-16 | [阅读 →](https://nova02640.github.io/mihomo-nas-proxy-setup/) |
+| 2 | 从引入到删除：一次 opencode 实战测试的完整记录 | 2026-08-15 | [阅读 →](https://nova02640.github.io/opencode-testing-recap/) |
+| 3 | DeepSeek Harness 深度调研：一切皆插件的 Agent 框架 | 2026-08-13 | [阅读 →](https://nova02640.github.io/deepseek-harness-research/) |
+| 4 | 从零搭建浏览器传奇类 MMORPG：Phaser 4 + Colyseus 全栈实践 | 2026-08-11 | [阅读 →](https://nova02640.github.io/building-mir-web-mmorpg/) |
+| 5 | 面朝烟火，静对人海 | 2026-08-11 | [阅读 →](https://nova02640.github.io/facing-smoke-and-sea/) |
+| 6 | 幸福的诅咒 | 2026-08-04 | [阅读 →](https://nova02640.github.io/the-curse-of-happiness/) |
+| 7 | 从 Paper 到 Hugo Bear Blog：一次极简主义迁移 | 2026-08-03 | [阅读 →](https://nova02640.github.io/migrating-from-paper-to-hugo-bear-blog/) |
+| 8 | 把 Paper 主题改成程序员喜欢的样子：一次克制的主题定制 | 2026-07-31 | [阅读 →](https://nova02640.github.io/把-paper-主题改成程序员喜欢的样子一次克制的主题定制/) |
+| 9 | 国产大模型官方价格一览（2026-07） | 2026-07-30 | [阅读 →](https://nova02640.github.io/国产大模型官方价格一览2026-07/) |
+| 10 | Hello World! 我的第一篇博客 | 2026-07-27 | [阅读 →](https://nova02640.github.io/hello-world-我的第一篇博客/) |
 
 ---
 
