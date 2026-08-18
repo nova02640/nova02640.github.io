@@ -1,22 +1,27 @@
-# Base URL used when generating links to your pages
+# ============================================================
+# nova02640.github.io — 配置（hugo-theme-lumen）
+# 迁移自 hugo-bearblog：保留原站 URL 结构与菜单，原站没有的
+# 功能（友链/社交图标/搜索/评论/公告/PWA/分类标签聚合页等）一律不开启。
+# ============================================================
+
 baseURL = "https://nova02640.github.io"
-# The name of this wonderful theme ;-).
-theme = "hugo-bearblog"
-# Basic metadata configuration for your blog.
+theme = "hugo-theme-lumen"
 title = "nova02640's Blog"
 author = "nova02640"
 copyright = "© 2026 nova02640"
-languageCode = "zh-cn"
-# Generate a nice robots.txt for SEO
+locale = "zh-cn"
+hasCJKLanguage = true
 enableRobotsTXT = true
-# Generate "Bearblog"-like URLs !only!, see https://bearblog.dev/.
+# 原站禁用分类/标签聚合页，迁移后保持一致
 disableKinds = ["taxonomy"]
 ignoreErrors = ["error-disable-taxonomy"]
+# 11 篇文章一页放完（原站 /blog/ 无分页）
+paginate = 20
 
 [permalinks]
   blog = "/:slug/"
-  tags = "/blog/:slug"
 
+# 主导航：仅 Blog + About（首页由左上角站点名链接直达）
 [[menu.main]]
   identifier = "blog"
   name = "Blog"
@@ -30,41 +35,30 @@ ignoreErrors = ["error-disable-taxonomy"]
   weight = 20
 
 [params]
-  # The "description" of your website. This is used in the meta data of your generated html.
   description = "Personal blog · Thoughts and sharing"
-  # The path to your "favicon". This should be a square (at least 32px x 32px) png-file.
-  # Hint: It's good practise to also put a "favicon.ico"-file into your "static"-folder.
-  # favicon = "images/favicon.png"
-  # These "images" are used for the structured data templates. This will show up, when
-  # services like Twitter or Slack want to generate a preview of a link to your site.
-  # See https://gohugo.io/templates/internal#twitter-cards and
-  # https://gohugo.io/templates/internal#open-graph.
-  # images = ["images/share.png"]
-  # Another "title" :-). This one is used as the site_name on the Hugo's internal
-  # opengraph structured data template.
-  # See https://ogp.me/ and https://gohugo.io/templates/internal#open-graph.
   title = "nova02640's Blog"
-  # This theme will, by default, inject a made-with-line at the bottom of the page.
-  # You can turn it off, but we would really appreciate if you don't :-).
-  # hideMadeWithLine = true
-  # By default, if you want to read more than one blog post you have to always go
-  # back to the /blog page.
-  # By enabling this feature each blog post will have at the end a navigator
-  enablePostNavigator = true
-  # By default, this theme displays dates with a format like "02 Jan, 2006", but
-  # you can customize it by setting the `dateFormat` param in your site's config
-  # file. See [Hugo's Format function docs](https://gohugo.io/functions/format/)
-  # for details. An example TOML config that uses [ISO
-  # 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-  dateFormat = "2006-01-02"
+  copyright = "© 2026 nova02640"
+  # --- 原站没有的功能，一律不配置 ---
+  # 社交账号：不配 [params.social]         → 页脚不渲染社交图标
+  # 公告：不配 [params.announcement]       → 不渲染公告栏
+  # 评论：enableComments 默认 false       → 不渲染评论区
+  # 搜索：enableSearch 默认 false         → 头部无搜索入口、不生成搜索页
+  # PWA：enablePWA 默认 false            → 不生成 manifest / sw
+  # 头像：不配 [params.author].avatar     → 无头像
+  # 版权许可块：不配 [params.license]     → 文章页无许可声明
 
-# Configure markup highlighter to match "Bearblog" aesthetics, see
-# https://gohugo.io/configuration/markup/#highlight
+  [params.author]
+    name = "nova02640"   # 仅用于 JSON-LD 作者元数据（无 avatar）
+
 [markup]
+  [markup.goldmark.renderer]
+    unsafe = true        # 允许正文内嵌原始 HTML
   [markup.highlight]
-    style = 'friendly'
+    noClasses = false    # class 模式，由 Lumen CSS 适配明暗双主题
     lineNos = true
     lineNumbersInTable = false
     codeFences = true
-  [markup.goldmark.renderer]
-    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
