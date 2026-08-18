@@ -1,7 +1,7 @@
 # ============================================================
 # nova02640.github.io — 配置（hugo-theme-lumen）
-# 迁移自 hugo-bearblog：保留原站 URL 结构与菜单，原站没有的
-# 功能（友链/社交图标/搜索/评论/公告/PWA/分类标签聚合页等）一律不开启。
+# 完整迁移：启用 Lumen 全部功能（友链/搜索/归档/分类标签/相关文章/
+# 公告/PWA/明暗主题），仅社交栏不含 X(Twitter)——用户无推特账号。
 # ============================================================
 
 baseURL = "https://nova02640.github.io"
@@ -12,53 +12,144 @@ copyright = "© 2026 nova02640"
 locale = "zh-cn"
 hasCJKLanguage = true
 enableRobotsTXT = true
-# 原站禁用分类/标签聚合页，迁移后保持一致
-disableKinds = ["taxonomy"]
-ignoreErrors = ["error-disable-taxonomy"]
-# 11 篇文章一页放完（原站 /blog/ 无分页）
-paginate = 20
+paginate = 6
+summaryLength = 60
 
+# 文章 URL 结构保持原站：/slug/（不破坏旧链接）
 [permalinks]
   blog = "/:slug/"
 
-# 主导航：仅 Blog + About（首页由左上角站点名链接直达）
-[[menu.main]]
-  identifier = "blog"
-  name = "Blog"
-  url = "/blog/"
-  weight = 10
-
-[[menu.main]]
-  identifier = "about"
-  name = "About"
-  url = "/about/"
-  weight = 20
-
-[params]
-  description = "Personal blog · Thoughts and sharing"
-  title = "nova02640's Blog"
-  copyright = "© 2026 nova02640"
-  # --- 原站没有的功能，一律不配置 ---
-  # 社交账号：不配 [params.social]         → 页脚不渲染社交图标
-  # 公告：不配 [params.announcement]       → 不渲染公告栏
-  # 评论：enableComments 默认 false       → 不渲染评论区
-  # 搜索：enableSearch 默认 false         → 头部无搜索入口、不生成搜索页
-  # PWA：enablePWA 默认 false            → 不生成 manifest / sw
-  # 头像：不配 [params.author].avatar     → 无头像
-  # 版权许可块：不配 [params.license]     → 文章页无许可声明
-
-  [params.author]
-    name = "nova02640"   # 仅用于 JSON-LD 作者元数据（无 avatar）
-
 [markup]
   [markup.goldmark.renderer]
-    unsafe = true        # 允许正文内嵌原始 HTML
+    unsafe = true          # 允许正文内嵌原始 HTML
   [markup.highlight]
-    noClasses = false    # class 模式，由 Lumen CSS 适配明暗双主题
+    noClasses = false      # class 模式，由主题 CSS 适配明暗双主题
     lineNos = true
-    lineNumbersInTable = false
-    codeFences = true
+    guessSyntax = false
+    tabWidth = 4
   [markup.tableOfContents]
     startLevel = 2
     endLevel = 4
     ordered = false
+
+[mediaTypes]
+  [mediaTypes."application/javascript"]
+    suffixes = ["js"]
+  [mediaTypes."application/manifest+json"]
+    suffixes = ["webmanifest"]
+
+# 首页额外生成 RSS / 搜索索引 / PWA 清单 / Service Worker
+[outputs]
+  home = ["HTML", "RSS", "searchindex", "manifest", "sw"]
+
+[outputFormats.searchindex]
+  mediaType = "application/json"
+  baseName = "index"
+  isPlainText = true
+  notAlternative = true
+
+[outputFormats.manifest]
+  mediaType = "application/manifest+json"
+  baseName = "manifest"
+  isPlainText = true
+  notAlternative = true
+
+[outputFormats.sw]
+  mediaType = "application/javascript"
+  baseName = "sw"
+  isPlainText = true
+  notAlternative = true
+
+# 相关文章推荐权重
+[related]
+  threshold = 60
+  toLower = true
+  [[related.indices]]
+    name = "keywords"
+    weight = 100
+  [[related.indices]]
+    name = "tags"
+    weight = 80
+  [[related.indices]]
+    name = "categories"
+    weight = 50
+
+[params]
+  description = "nova02640 的个人博客 —— 记录编程、技术、游戏开发与生活随笔。"
+  defaultTheme = "auto"        # auto / light / dark
+  showToc = true
+  showBreadcrumb = true
+  showReadingTime = true
+  showWordCount = true
+  homeLayout = "card"          # list（经典列表）/ card（杂志卡片）
+  readingSpeed = 400           # 中文阅读速度基准（字/分钟）
+  enableSearch = true
+  enablePWA = true
+  enableComments = false       # 未配置 Giscus，保持关闭
+
+  [params.announcement]
+    enabled = true
+    text = "🎉 博客已升级到 Lumen 主题 —— 试试右上角的主题切换与全文搜索"
+    url = ""
+    dismissible = true
+
+  [params.author]
+    name = "nova02640"
+
+  [params.license]
+    enabled = true
+    name = "CC BY-NC-SA 4.0"
+    url = "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    text = "署名-非商业性使用-相同方式共享 4.0 国际许可协议"
+
+  # 社交栏：GitHub / Email / RSS（无 X/Twitter，用户无该账号）
+  [[params.social]]
+    name = "GitHub"
+    url = "https://github.com/nova02640"
+  [[params.social]]
+    name = "Email"
+    url = "mailto:nova_work@foxmail.com"
+  [[params.social]]
+    name = "RSS"
+    url = "/index.xml"
+
+  # Giscus 评论（enableComments = true 时启用）
+  [params.giscus]
+    repo = ""
+    repoId = ""
+    category = "Announcements"
+    categoryId = ""
+    mapping = "pathname"
+    reactions = "1"
+    emitMetadata = "0"
+    inputPosition = "top"
+
+# 主导航
+[[menu.main]]
+  name = "首页"
+  pageRef = "/"
+  weight = 1
+[[menu.main]]
+  name = "文章"
+  pageRef = "/blog/"
+  weight = 2
+[[menu.main]]
+  name = "分类"
+  pageRef = "/categories/"
+  weight = 3
+[[menu.main]]
+  name = "标签"
+  pageRef = "/tags/"
+  weight = 4
+[[menu.main]]
+  name = "归档"
+  pageRef = "/archives/"
+  weight = 5
+[[menu.main]]
+  name = "友链"
+  pageRef = "/friends/"
+  weight = 6
+[[menu.main]]
+  name = "关于"
+  pageRef = "/about/"
+  weight = 7
