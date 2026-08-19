@@ -1,16 +1,8 @@
-# 编译输出
-/public
-
-# 系统文件
 .DS_Store
 Thumbs.db
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Hugo 临时
-.hugo_build.lock
-resources/_gen/
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+_multiconfig.yml

@@ -1,0 +1,112 @@
+# ============================================================
+# nova02640.github.io — Hexo 主配置（Hexo 8 + Butterfly 5.7）
+# 迁移自 Hugo(Lumen)，内容与 URL 结构保持不变
+# ============================================================
+
+# Site
+title: nova02640's Blog
+subtitle: '记录编程、技术、游戏开发与生活随笔'
+description: 'nova02640 的个人博客 —— 记录编程、技术、游戏开发与生活随笔。'
+keywords: ['编程', '游戏开发', 'AI', 'NAS', '生活']
+author: nova02640
+language: zh-CN
+timezone: Asia/Shanghai
+
+# URL
+## 保持旧链接：/slug/（与 Hugo permalinks blog = "/:slug/" 一致）
+url: https://nova02640.github.io
+permalink: :slug/
+permalink_defaults:
+pretty_urls:
+  trailing_index: false
+  trailing_html: false
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site
+  exclude: ''
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+
+# Home page setting
+index_generator:
+  path: ''
+  per_page: 6
+  order_by: -date
+
+# Category & Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Metadata elements
+meta_generator: true
+
+# Date / Time format
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+updated_option: mtime
+
+# Pagination
+per_page: 6
+pagination_dir: page
+
+# Include / Exclude file(s)
+include:
+exclude:
+
+# Extensions
+## Plugins: https://hexo.io/plugins/
+theme: butterfly
+
+# Deployment
+## 部署走 GitHub Actions（workflow 模式），无需本地 deploy
+deploy:
+
+# ============================================================
+# 插件配置
+# ============================================================
+
+# 本地搜索（butterfly search.type: local 使用）
+search:
+  path: search.json
+  field: post
+  content: true
+
+# RSS（butterfly 社交栏 RSS 图标链接）
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
+# Sitemap
+sitemap:
+  path: sitemap.xml

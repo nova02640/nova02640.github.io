@@ -1,6 +1,0 @@
-# 友链数据：按此格式添加你的朋友
-# [[friends]]
-# name = "朋友昵称"
-# url = "https://example.com"
-# avatar = "/avatars/f1.png"   # 可选，头像放 static/avatars/ 下
-# intro = "一句话简介"
