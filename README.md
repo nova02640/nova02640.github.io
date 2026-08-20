@@ -6,6 +6,7 @@
 
 ## 博文列表
 
+- [飞牛 NAS 下载中心故障排查实录：任务删不掉、无法下载的完整解决过程](https://nova02640.github.io/fnos-download-center-troubleshooting/)（2026-08-20）
 - [从 Hugo 到 Hexo + Butterfly：一次以主题为准的彻底迁移](https://nova02640.github.io/migrating-to-hexo-butterfly/)（2026-08-19）
 - [在 NAS 上部署 mihomo：从调研到全屋 GitHub 加速](https://nova02640.github.io/mihomo-nas-proxy-setup/)（2026-08-16）
 - [从引入到删除：一次 opencode 实战测试的完整记录](https://nova02640.github.io/opencode-testing-recap/)（2026-08-15）
