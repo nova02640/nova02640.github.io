@@ -4,6 +4,7 @@ date: 2026-08-20 14:30:00
 description: "飞牛(fnOS)下载中心出现\"已完成任务删不掉、无法添加新下载\"的故障，持续数月。本文记录完整排查过程：从任务数据库入手，层层下挖到 qBittorrent 引擎 5 个月无法启动，最终定位到两个叠加根因（admin 用户 home 目录丢失 + qbt 数据目录权限错乱），修复后实测验证端到端可用。"
 tags: [fnOS, NAS, 下载中心, qBittorrent, aria2, 排障]
 categories: [技术]
+cover: /img/covers/fnos-download-center-troubleshooting.jpg
 ---
 
 ## 前言
