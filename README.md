@@ -6,6 +6,7 @@
 
 ## 博文列表
 
+- [从地图翻车到事件聚类：用 RSSHub + Hexo 做一个全球新闻速览站](https://nova02640.github.io/rsshub-news-devlog/)（2026-09-10）
 - [DeepSeek Harness 实操实测：从基准任务到写出一款可玩的仙侠游戏](https://nova02640.github.io/deepseek-harness-field-test/)（2026-09-08）
 - [飞牛 NAS 下载中心故障排查实录：任务删不掉、无法下载的完整解决过程](https://nova02640.github.io/fnos-download-center-troubleshooting/)（2026-08-20）
 - [从 Hugo 到 Hexo + Butterfly：一次以主题为准的彻底迁移](https://nova02640.github.io/migrating-to-hexo-butterfly/)（2026-08-19）
