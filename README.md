@@ -6,9 +6,13 @@
 
 ## 博文列表
 
+- [同一张考卷，两个 AI 编码代理：DeepSeek Harness Python SDK 与 OpenCode 对照实测](https://nova02640.github.io/dsh-python-sdk-vs-opencode-eval/)（2026-09-17）
 - [从地图翻车到事件聚类：用 RSSHub + Hexo 做一个全球新闻速览站](https://nova02640.github.io/rsshub-news-devlog/)（2026-09-10）
 - [DeepSeek Harness 实操实测：从基准任务到写出一款可玩的仙侠游戏](https://nova02640.github.io/deepseek-harness-field-test/)（2026-09-08）
+- [NAS 运维手记：升级、代理排障与构建任务迁移](https://nova02640.github.io/nas-ops-recap-202608/)（2026-08-23）
 - [飞牛 NAS 下载中心故障排查实录：任务删不掉、无法下载的完整解决过程](https://nova02640.github.io/fnos-download-center-troubleshooting/)（2026-08-20）
+- [微信 Bot 限流再排查：关闭 typing 后仍被限流，真凶是 tool_progress 消息](https://nova02640.github.io/weixin-rate-limit-followup/)（2026-08-19）
+- [微信 Bot 消息限流深度排查：从『消息凭空消失』到参数调优](https://nova02640.github.io/weixin-rate-limit-investigation/)（2026-08-19）
 - [从 Hugo 到 Hexo + Butterfly：一次以主题为准的彻底迁移](https://nova02640.github.io/migrating-to-hexo-butterfly/)（2026-08-19）
 - [在 NAS 上部署 mihomo：从调研到全屋 GitHub 加速](https://nova02640.github.io/mihomo-nas-proxy-setup/)（2026-08-16）
 - [从引入到删除：一次 opencode 实战测试的完整记录](https://nova02640.github.io/opencode-testing-recap/)（2026-08-15）
