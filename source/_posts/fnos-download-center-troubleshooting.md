@@ -149,7 +149,7 @@ trim-cli download rm 1 2 4    # 返回 {}
 ```text
 Fearless 2017 S01 1080p WEB-DL HEVC x265 BONE
 大小：3.72 GB（全季 6 集）
-状态：downloading → 66MB 真实落盘 /vol1/1000/下载/
+状态：downloading → 66MB 真实落盘到 NAS 的下载目录
 ```
 
 数据库确认任务入库，下载目录出现 4 个 `.part` 文件（多文件种子正常解析、并行下载），证明**添加 → 引擎处理 → 文件落盘**全链路正常。

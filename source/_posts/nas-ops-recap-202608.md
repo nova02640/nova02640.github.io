@@ -1,7 +1,7 @@
 ---
 title: "NAS 运维手记：升级、代理排障与构建任务迁移"
 date: 2026-08-23 20:40:00
-description: "最近集中处理了几件 NAS 运维任务：Hermes Agent 从 v0.20.2 升级到 v0.20.5；mihomo 代理持续出问题的根因排查（机场按 User-Agent 返回不同订阅格式的坑 + 节点选择落在劣质节点）；以及把 family-motion 和博客构建任务迁移到内网小主机 debian106。本文记录排查思路与最终方案。"
+description: "最近集中处理了几件 NAS 运维任务：Hermes Agent 从 v0.20.2 升级到 v0.20.5；mihomo 代理持续出问题的根因排查（机场按 User-Agent 返回不同订阅格式的坑 + 节点选择落在劣质节点）；以及把 family-motion 和博客构建任务迁移到一台内网小主机。本文记录排查思路与最终方案。"
 tags: [NAS, fnOS, Hermes, mihomo, 代理, 运维, 排障]
 categories: [技术]
 cover: /img/covers/nas-ops-recap-202608.jpg
@@ -69,19 +69,19 @@ proxy-providers:
 
 **经验**：代理出问题时，先看当前节点是哪个、直测目标站连通性，再决定是换节点还是查订阅，别一上来就怀疑配置。
 
-## 三、构建任务迁移到 debian106
+## 三、构建任务迁移到内网小主机
 
-NAS 只有 4G 内存，跑 npm 构建容易内存吃紧（Hexo 博客构建、family-motion 项目构建都比较吃资源）。正好有一台内网小主机 debian106（Debian 13，120G SSD，内存空闲多），于是把两类构建任务迁了过去：
+NAS 只有 4G 内存，跑 npm 构建容易内存吃紧（Hexo 博客构建、family-motion 项目构建都比较吃资源）。正好家里有一台备用的小主机（Debian 13，120G SSD，内存空闲多），于是把两类构建任务迁了过去：
 
 - **family-motion 构建**：rsync 仓库 + `npm ci`（241 包）+ 构建，26 秒通过
 - **Hexo 博客构建**：`npm ci`（289 包）+ `hexo generate`（106 文件），5.77 秒，产物 6.4M
 
-迁移后 debian106 上的资产：
-- `/data/tools/nodejs`：Node v20.19.2 + npm 10.8.2（用户级安装，不用 root）
-- `/data/family-motion`：源码 + 构建产物
-- `/data/nova02640.github.io`：博客源码 + 构建产物
+迁移后的资产安排很简单，各占一个独立目录：
 
-需要注意的边界：**博客的 GitHub Pages 推送链路仍留在 NAS**（依赖 mihomo 代理，代理只绑定 NAS 本机）；debian106 只负责构建，产物同步回 NAS 或直接推送。gh/git 高频操作也暂缓迁移。
+- **Node 运行时**：v20.19.2 + npm 10.8.2（用户级安装，不需要 root）
+- **两个项目的源码与构建产物**：分别放各自的目录，互不干扰
+
+需要注意的边界：**博客的 GitHub Pages 推送链路仍留在 NAS**（依赖 mihomo 代理，代理只绑定 NAS 本机）；这台小主机只负责构建，产物同步回 NAS 或直接推送。gh/git 高频操作也暂缓迁移。
 
 ## 小结
 

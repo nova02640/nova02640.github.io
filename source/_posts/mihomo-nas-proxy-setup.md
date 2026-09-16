@@ -106,7 +106,7 @@ curl -L -o geosite.dat   "https://ghfast.top/https://github.com/MetaCubeX/meta-r
 
 ### 服务化
 
-部署在 `/vol1/@apphome/hermes-agent/data/mihomo/`，用 systemd 托管（开机自启、崩溃自动重启）：
+部署在 NAS 上一个独立的数据目录里（下称 `<mihomo-dir>`），用 systemd 托管（开机自启、崩溃自动重启）：
 
 ```ini
 [Unit]
@@ -115,8 +115,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=hermes-agent
-ExecStart=/vol1/@apphome/hermes-agent/data/mihomo/mihomo -d /vol1/@apphome/hermes-agent/data/mihomo
+User=<运行用户>
+ExecStart=<mihomo-dir>/mihomo -d <mihomo-dir>
 Restart=on-failure
 
 [Install]
