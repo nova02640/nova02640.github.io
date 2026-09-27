@@ -6,6 +6,8 @@
 
 ## 博文列表
 
+- [把 523 课的 AI 工程课程，做成一个能闯关的进度站](https://nova02640.github.io/ai-engineering-quest-launch/)（2026-09-28）
+- [一个闯关式学习站的开发记录：选题、架构，和一个被测试抓出来的真 bug](https://nova02640.github.io/ai-engineering-quest-devlog/)（2026-09-28）
 - [同一张考卷，两个 AI 编码代理：DeepSeek Harness Python SDK 与 OpenCode 对照实测](https://nova02640.github.io/dsh-python-sdk-vs-opencode-eval/)（2026-09-17）
 - [从地图翻车到事件聚类：用 RSSHub + Hexo 做一个全球新闻速览站](https://nova02640.github.io/rsshub-news-devlog/)（2026-09-10）
 - [DeepSeek Harness 实操实测：从基准任务到写出一款可玩的仙侠游戏](https://nova02640.github.io/deepseek-harness-field-test/)（2026-09-08）
