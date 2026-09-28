@@ -1,11 +1,21 @@
 ---
 title: "在 NAS 上部署 mihomo：从调研到全屋 GitHub 加速"
 date: 2026-08-16 00:00:00
-description: "因为 GitHub push/clone 频繁超时，我在 NAS 上部署了 mihomo（Clash.Meta 继任者）代理。本文完整记录：项目调研（Alpha/Meta 分支）、文档站学习、订阅解析、GeoIP 数据坑、systemd 服务化、git/gh 接入，以及 8 项全面测试数据——直连 15 秒的 GitHub 变成 1.5 秒。"
+description: "【方案已停用】本文记录的 mihomo 代理方案已于 2026-09-28 彻底移除，仅作技术记录保留，请勿按文中步骤重新部署。原文记录：因为 GitHub push/clone 频繁超时，我在 NAS 上部署了 mihomo（Clash.Meta 继任者）代理，含项目调研、订阅解析、GeoIP 数据坑、systemd 服务化、git/gh 接入与 8 项测试数据。"
 tags: [mihomo, Clash, 代理, NAS, GitHub, 网络]
 categories: [技术]
 cover: /img/covers/mihomo-nas-proxy-setup.jpg
 ---
+
+{% note warning %}
+**⚠️ 方案已停用（2026-09-28）**
+
+本文记录的 mihomo 代理方案已**彻底移除**：服务、配置、订阅配置与本地数据、相关防火墙规则全部清理完毕，不再维护，也不会再更新。
+
+**停用原因**：该链路频繁失效（节点不稳定，需反复排查），维护成本高于收益；GitHub 访问已改用更稳定的替代方式。
+
+**本文仅作技术记录保留**——其中的方案调研方法、systemd 服务化思路与排查手段仍有参考价值；但请勿按文中步骤重新部署。文内配置示例仅为通用默认参数，不含任何有效凭证。
+{% endnote %}
 
 ## 缘起：那个让人崩溃的 GitHub
 
