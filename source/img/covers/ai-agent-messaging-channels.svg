@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.35"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.82" cy="0.12" r="0.62">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+  <circle cx="1350" cy="670" r="200" fill="none" stroke="#38bdf8" stroke-opacity="0.20" stroke-width="2"/>
+  <circle cx="1350" cy="670" r="140" fill="#38bdf8" fill-opacity="0.06"/>
+  <circle cx="1350" cy="670" r="78" fill="#38bdf8" fill-opacity="0.10"/>
+  <rect x="100" y="120" width="7" height="46" rx="3.5" fill="url(#accent)"/>
+  <text x="124" y="150" font-family="Noto Sans CJK SC" font-size="30" font-weight="700" fill="#94a3b8" letter-spacing="2">实测评估</text>
+  <text x="100" y="306" font-family="Noto Sans CJK SC" font-size="80" font-weight="700" fill="#f8fafc"><tspan fill="#f8fafc">把 AI Agent 接进</tspan><tspan fill="#38bdf8">微信、QQ 和飞书</tspan></text>
+  <text x="100" y="362" font-family="Noto Sans CJK SC" font-size="34" font-weight="400" fill="#94a3b8">三条消息通道的投递能力横向实测 —— 谁会被拦截、谁会截断</text>
+  <rect x="100" y="425.9" width="201.68" height="48" rx="24" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.5"/>
+  <text x="200.84" y="458.3" font-family="Noto Sans CJK SC" font-size="24" fill="#38bdf8" text-anchor="middle">Hermes Agent</text>
+  <rect x="319.68" y="425.9" width="140" height="48" rx="24" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.5"/>
+  <text x="389.68" y="458.3" font-family="Noto Sans CJK SC" font-size="24" fill="#38bdf8" text-anchor="middle">消息通道</text>
+  <rect x="477.68" y="425.9" width="92" height="48" rx="24" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1.5"/>
+  <text x="523.68" y="458.3" font-family="Noto Sans CJK SC" font-size="24" fill="#38bdf8" text-anchor="middle">实测</text>
+  <rect x="100" y="694" width="448" height="116" rx="16" fill="#1e293b" fill-opacity="0.85" stroke="#334155" stroke-width="2"/>
+  <text x="126" y="736" font-family="Noto Sans CJK SC" font-size="22" fill="#94a3b8">微信限流命中</text>
+  <text x="126" y="786" font-family="Noto Sans CJK SC" font-size="42" font-weight="700" fill="#f87171">725</text>
+  <rect x="576" y="694" width="448" height="116" rx="16" fill="#1e293b" fill-opacity="0.85" stroke="#334155" stroke-width="2"/>
+  <text x="602" y="736" font-family="Noto Sans CJK SC" font-size="22" fill="#94a3b8">QQ 主动推送</text>
+  <text x="602" y="786" font-family="Noto Sans CJK SC" font-size="42" font-weight="700" fill="#fbbf24">已下线</text>
+  <rect x="1052" y="694" width="448" height="116" rx="16" fill="#1e293b" fill-opacity="0.85" stroke="#334155" stroke-width="2"/>
+  <text x="1078" y="736" font-family="Noto Sans CJK SC" font-size="22" fill="#94a3b8">飞书投递失败</text>
+  <text x="1078" y="786" font-family="Noto Sans CJK SC" font-size="42" font-weight="700" fill="#4ade80">0</text>
+  <text x="100" y="848" font-family="Noto Sans CJK SC" font-size="24" fill="#64748b">2026-10-01</text>
+  <text x="1500" y="848" font-family="Noto Sans CJK SC" font-size="24" fill="#64748b" text-anchor="end">nova02640.github.io</text>
+</svg>
