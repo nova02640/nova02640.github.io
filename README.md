@@ -6,6 +6,7 @@
 
 ## 博文列表
 
+- [「搜到 ≠ 下得动」：给自建磁力索引器补一个中文搜索前端和死种预筛](https://nova02640.github.io/bt-search/)（2026-10-02）
 - [把 AI Agent 接进微信、QQ 和飞书：三条消息通道的实测评估](https://nova02640.github.io/ai-agent-messaging-channels/)（2026-10-01）
 - [把 523 课的 AI 工程课程，做成一个能闯关的进度站](https://nova02640.github.io/ai-engineering-quest-launch/)（2026-09-28）
 - [一个闯关式学习站的开发记录：选题、架构，和一个被测试抓出来的真 bug](https://nova02640.github.io/ai-engineering-quest-devlog/)（2026-09-28）
