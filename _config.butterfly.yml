@@ -296,7 +296,7 @@ aside:
       link: https://github.com/nova02640
   card_announcement:
     enable: true
-    content: 🎉 博客已迁移到 Butterfly 主题 —— 试试右上角的明暗切换与本地搜索
+    content: 📌 记录 AI Agent、自托管与游戏开发的实践与踩坑 —— 长期更新
   card_recent_post:
     enable: true
     # If set 0 will show all
