@@ -6,6 +6,7 @@
 
 ## 博文列表
 
+- [「收得到，发不出去」：一次飞书 OpenAPI 21001 策略拦截的完整排查](https://nova02640.github.io/feishu-21001-access-denied/)（2026-10-15）
 - [自托管 AI Agent 搬家记：从一体化 NAS 到 4 核小主机](https://nova02640.github.io/selfhosted-agent-mini-pc-migration/)（2026-10-04）
 - [给博客做一次极客化改版：三个藏了一个多月的硬伤，和两个被推翻的结论](https://nova02640.github.io/blog-geek-refresh/)（2026-10-02）
 - [「搜到 ≠ 下得动」：给自建磁力索引器补一个中文搜索前端和死种预筛](https://nova02640.github.io/bt-search/)（2026-10-02）
