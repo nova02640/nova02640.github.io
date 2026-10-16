@@ -1071,7 +1071,56 @@ inject:
   head:
     # - <link rel="stylesheet" href="/xxx.css">
   bottom:
-    # - <script src="xxxx"></script>
+    # 语言切换按钮（中文 <-> English）+ 英文页 chrome 文案切换，注入到导航菜单最前面
+    - |
+      <script>
+      (function () {
+        var p = location.pathname;
+        var isEn = p === '/en/' || p.indexOf('/en/') === 0;
+        var target = isEn
+          ? (p === '/en/' ? '/' : p.replace(/^\/en/, '/'))
+          : (p === '/' ? '/en/' : '/en' + p);
+        var home = isEn ? '/' : '/en/';
+        function go(u) {
+          fetch(u, { method: 'HEAD' })
+            .then(function (r) { location.href = r.ok ? u : home; })
+            .catch(function () { location.href = u; });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+          var menus = document.getElementById('menus');
+          if (menus) {
+            var label = isEn ? '中文' : 'EN';
+            var title = isEn ? '切换到中文版' : 'Switch to English version';
+            var box = document.createElement('div');
+            box.className = 'menus_item';
+            box.innerHTML = '<a class="site-page" href="javascript:void(0)" title="' + title + '">' +
+              '<i class="fas fa-language fa-fw"></i><span> ' + label + '</span></a>';
+            box.querySelector('a').addEventListener('click', function () { go(target); });
+            menus.insertBefore(box, menus.firstChild);
+          }
+          if (isEn) {
+            // 导航菜单/搜索按钮文案（来自站点配置，不走主题 i18n）
+            var dict = {
+              '首页': 'Home', '文章': 'Archives', '分类': 'Categories',
+              '标签': 'Tags', '友链': 'Links', '关于': 'About', '搜索': 'Search'
+            };
+            var spans = document.querySelectorAll('#menus span, #search-button span');
+            for (var i = 0; i < spans.length; i++) {
+              var t = (spans[i].textContent || '').trim();
+              if (dict[t]) spans[i].textContent = ' ' + dict[t];
+            }
+            // 首页副标题（typed.js 打的是中文配置串）——英文页直接隐藏
+            var sub = document.getElementById('site-subtitle');
+            if (sub) sub.style.display = 'none';
+            // <title> 里的中文副标题换掉
+            var zhSub = '记录编程、技术、游戏开发与生活随笔';
+            if (document.title.indexOf(zhSub) >= 0) {
+              document.title = document.title.split(zhSub).join('Programming, tech, game dev & life notes');
+            }
+          }
+        });
+      })();
+      </script>
 
 # CDN Settings
 # Don't modify the following settings unless you know how they work
