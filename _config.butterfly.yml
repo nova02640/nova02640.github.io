@@ -1096,7 +1096,10 @@ inject:
             box.innerHTML = '<a class="site-page" href="javascript:void(0)" title="' + title + '">' +
               '<i class="fas fa-language fa-fw"></i><span> ' + label + '</span></a>';
             box.querySelector('a').addEventListener('click', function () { go(target); });
-            menus.insertBefore(box, menus.firstChild);
+            // 放进 .menus_items 第一位——与其它菜单项同一盒模型、同行同基线（A 方案）
+            var items = menus.querySelector('.menus_items');
+            if (items) items.insertBefore(box, items.firstChild);
+            else menus.insertBefore(box, menus.firstChild);
           }
           if (isEn) {
             // 导航菜单/搜索按钮文案（来自站点配置，不走主题 i18n）
