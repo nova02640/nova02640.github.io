@@ -1112,6 +1112,16 @@ inject:
               var t = (spans[i].textContent || '').trim();
               if (dict[t]) spans[i].textContent = ' ' + dict[t];
             }
+            // 侧边栏静态中文（作者简介 / 公告）：改成英文
+            var bio = document.querySelector('.author-info-description');
+            if (bio) bio.textContent = 'Tech, games, and life — notes on everything interesting.';
+            var ann = document.querySelector('.announcement_content');
+            if (ann) ann.textContent = '📌 Hands-on notes on AI agents, self-hosting, and game dev — updated regularly.';
+            // 只对中文站有意义的侧栏卡片（标签云/分类/归档/简繁切换）：英文页隐藏
+            ['.card-tags', '.card-categories', '.card-archives', '#aside-cat-list', '#translateLink'].forEach(function (sel) {
+              var el = document.querySelector(sel);
+              if (el) el.style.display = 'none';
+            });
             // 首页副标题（typed.js 打的是中文配置串）——英文页直接隐藏
             var sub = document.getElementById('site-subtitle');
             if (sub) sub.style.display = 'none';
